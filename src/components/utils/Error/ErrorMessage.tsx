@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 
 const ErrorStyles = styled.div`
@@ -18,14 +19,20 @@ const ErrorStyles = styled.div`
   }
 `;
 
-const DisplayError = ({ error }) => {
+const DisplayError = ({ error }: { error: any }) => {
   if (!error || !error.message) return null;
-  if (error.networkError && error.networkError.result && error.networkError.result.errors.length) {
-    return error.networkError.result.errors.map((error, i) => (
+  if (
+    error.networkError &&
+    error.networkError.result &&
+    error.networkError.result.errors.length
+  ) {
+    // eslint-disable-next-line no-shadow
+    return error.networkError.result.errors.map((error: any, i: any) => (
+      // eslint-disable-next-line react/no-array-index-key
       <ErrorStyles key={i}>
         <p data-test="graphql-error">
           <strong>Shoot!</strong>
-          {error.message.replace('GraphQL error: ', '')}
+          {error.message.replace(`GraphQL error: `, ``)}
         </p>
       </ErrorStyles>
     ));
@@ -34,7 +41,7 @@ const DisplayError = ({ error }) => {
     <ErrorStyles>
       <p data-test="graphql-error">
         <strong>Shoot!</strong>
-        {error.message.replace('GraphQL error: ', '')}
+        {error.message.replace(`GraphQL error: `, ``)}
       </p>
     </ErrorStyles>
   );
@@ -45,6 +52,7 @@ DisplayError.defaultProps = {
 };
 
 DisplayError.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   error: PropTypes.object,
 };
 

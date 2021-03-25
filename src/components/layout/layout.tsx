@@ -1,14 +1,18 @@
 // import { GlobalStyles } from 'components/styles/Global';
 import React from 'react';
+import Navbar from '../Header/Navbar/Navbar';
 import Meta from './Meta';
 
 interface Props {
   children: React.ReactNode;
+  pageTitle?: string;
 }
 
-const Layout: React.FC<Props> = ({ children }) => (
+const Layout: React.FC<Props> = ({ children, pageTitle }) => (
   <>
-    <Meta /> {children}
+    <Meta pageTitle={pageTitle} />
+    <Navbar />
+    {children}
   </>
 );
 
