@@ -1,3 +1,4 @@
+import { NextPageContext, NextComponentType } from 'next';
 import { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/react-hooks';
 import NextNprogress from 'nextjs-progressbar';
@@ -23,5 +24,24 @@ function MyApp({ Component, pageProps, apollo }: MyProps) {
     </ApolloProvider>
   );
 }
+
+MyApp.getInitialProps = async ({
+  Component,
+  ctx,
+}: {
+  Component: NextComponentType;
+  ctx: NextPageContext;
+}) => {
+  let pageProps = {};
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  pageProps.query = ctx.query;
+  return { pageProps };
+};
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 
 export default withData(MyApp);

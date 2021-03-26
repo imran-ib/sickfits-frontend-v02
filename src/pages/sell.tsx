@@ -1,8 +1,9 @@
 import Layout from '@/components/layout/layout';
+import CreateProduct from '@/components/Products/CreateProduct';
 
 const SellPage = () => (
   <Layout>
-    <h1>Sell Page</h1>
+    <CreateProduct />
   </Layout>
 );
 
