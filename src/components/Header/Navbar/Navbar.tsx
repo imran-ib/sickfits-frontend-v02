@@ -1,13 +1,13 @@
+import Link from 'next/link';
 import React from 'react';
 
-interface Props {
-  test?: any;
-}
-
-const Navbar: React.FC<Props> = () => (
-  <div>
-    <h1>Navbar</h1>
-  </div>
+const Navbar = () => (
+  <nav>
+    <Link href="/products"> Products </Link>
+    <Link href="/sell"> Sell </Link>
+    <Link href="/orders"> Orders </Link>
+    <Link href="/account"> Account </Link>
+  </nav>
 );
 
 export default Navbar;
