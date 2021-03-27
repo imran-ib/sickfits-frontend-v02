@@ -1,41 +1,50 @@
-import {
-  useCreateProductMutation,
-  AllProductDocument,
-} from '@/generated/graphql';
-import { useRouter } from 'next/dist/client/router';
+import { useProductQuery, useUpdateProductMutation } from '@/generated/graphql';
 import React from 'react';
+import { useRouter } from 'next/dist/client/router';
 import { useForm } from '../Hooks/useForm';
 import FormStyles from '../styles/Form';
 import DisplayError from '../utils/Error/ErrorMessage';
 
-const CreateProduct = () => {
+interface Props {
+  id: string;
+}
+
+const UpdateProduct: React.FC<Props> = ({ id }) => {
   const router = useRouter();
-  const { ChangeHandler, state, ClearForm } = useForm({
-    image: ``,
-    name: `Nice Shoes`,
-    price: 1235,
-    description: `Greate Shoes`,
-  });
-  const [createProduct, { data, loading, error }] = useCreateProductMutation({
-    variables: state,
-    refetchQueries: [{ query: AllProductDocument }],
-  });
+
+  const {
+    data: Productdata,
+    loading: Productloading,
+    error: Producterror,
+  } = useProductQuery({ variables: { id } });
+
+  const [updateProduct, { data, loading, error }] = useUpdateProductMutation();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const { ChangeHandler, state, ClearForm } = useForm(Productdata?.Product);
+
+  if (loading || Productloading) return <p>Loading...</p>;
+  if (error || Producterror) return <p>{Producterror?.message}</p>;
+  if (!Productdata?.Product) return <p>No Items Found</p>;
 
   return (
     <FormStyles
       onSubmit={async (e) => {
         e.preventDefault();
-        const res = await createProduct();
+        const res = await updateProduct({
+          variables: {
+            id,
+            name: state.name,
+            price: state.price,
+            description: state.description,
+          },
+        });
         ClearForm();
-        router.push(`/product/${res.data?.createProduct?.id}`);
+        router.push(`/product/${res.data?.updateProduct?.id}`);
       }}
     >
       <DisplayError error={error} />
       <fieldset aria-busy={loading} disabled={loading}>
-        <label htmlFor="image">
-          Image
-          <input onChange={ChangeHandler} type="file" name="image" id="image" />
-        </label>
         <label htmlFor="name">
           Name
           <input
@@ -72,10 +81,10 @@ const CreateProduct = () => {
             placeholder="Price"
           />
         </label>
-        <button type="submit">Add Product</button>
+        <button type="submit">Update Product</button>
       </fieldset>
     </FormStyles>
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

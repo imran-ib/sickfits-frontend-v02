@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface InitState {
   name: string;
@@ -11,6 +11,11 @@ export const useForm = (
   initialState: InitState = { name: ``, price: 0, description: ``, image: `` },
 ) => {
   const [state, setstate] = React.useState(initialState);
+  const initialValues = Object.values(initialState).join(``);
+  useEffect(() => {
+    // This function runs when the things we are watching change
+    setstate(initialState);
+  }, [initialValues]);
 
   const ChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     // eslint-disable-next-line prefer-const

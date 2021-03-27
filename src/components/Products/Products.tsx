@@ -2,7 +2,7 @@
 import React from 'react';
 import { useAllProductQuery } from '@/generated/graphql';
 import styled from 'styled-components';
-import SingleProduct from './SingleProduct';
+import SingleProductCard from './SingleProductCard';
 
 const ProductStyles = styled.div`
   display: grid;
@@ -19,7 +19,7 @@ const Products = () => {
     <div>
       <ProductStyles>
         {data!.allProducts!.map((product) => (
-          <SingleProduct key={product!.id} Product={product!} />
+          <SingleProductCard key={product!.id} Product={product!} />
         ))}
       </ProductStyles>
     </div>
