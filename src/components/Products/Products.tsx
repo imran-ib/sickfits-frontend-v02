@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react';
 import { useAllProductQuery } from '@/generated/graphql';
+import { perPage } from '@/../config';
 import styled from 'styled-components';
 import SingleProductCard from './SingleProductCard';
 
@@ -10,8 +11,17 @@ const ProductStyles = styled.div`
   grid-gap: 60px;
 `;
 
-const Products = () => {
-  const { data, loading, error } = useAllProductQuery();
+interface Props {
+  page: number;
+}
+
+const Products: React.FC<Props> = ({ page }) => {
+  const { data, loading, error } = useAllProductQuery({
+    variables: {
+      skip: page * perPage - perPage,
+      first: perPage,
+    },
+  });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>;
   if (!data?.allProducts) return <p>No Items Found</p>;

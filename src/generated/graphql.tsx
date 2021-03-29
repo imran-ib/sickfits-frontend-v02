@@ -1,10 +1,14 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -69,7 +73,6 @@ export type CloudinaryImage_File = {
   publicUrlTransformed?: Maybe<Scalars['String']>;
 };
 
-
 export type CloudinaryImage_FilePublicUrlTransformedArgs = {
   transformation?: Maybe<CloudinaryImageFormat>;
 };
@@ -80,7 +83,6 @@ export type CreateInitialUserInput = {
   password?: Maybe<Scalars['String']>;
 };
 
-
 export type KeystoneAdminMeta = {
   __typename?: 'KeystoneAdminMeta';
   enableSignout: Scalars['Boolean'];
@@ -88,7 +90,6 @@ export type KeystoneAdminMeta = {
   lists: Array<KeystoneAdminUiListMeta>;
   list?: Maybe<KeystoneAdminUiListMeta>;
 };
-
 
 export type KeystoneAdminMetaListArgs = {
   key: Scalars['String'];
@@ -107,7 +108,6 @@ export type KeystoneAdminUiFieldMeta = {
   itemView?: Maybe<KeystoneAdminUiFieldMetaItemView>;
 };
 
-
 export type KeystoneAdminUiFieldMetaItemViewArgs = {
   id: Scalars['ID'];
 };
@@ -119,7 +119,7 @@ export type KeystoneAdminUiFieldMetaCreateView = {
 
 export enum KeystoneAdminUiFieldMetaCreateViewFieldMode {
   Edit = 'edit',
-  Hidden = 'hidden'
+  Hidden = 'hidden',
 }
 
 export type KeystoneAdminUiFieldMetaItemView = {
@@ -130,7 +130,7 @@ export type KeystoneAdminUiFieldMetaItemView = {
 export enum KeystoneAdminUiFieldMetaItemViewFieldMode {
   Edit = 'edit',
   Read = 'read',
-  Hidden = 'hidden'
+  Hidden = 'hidden',
 }
 
 export type KeystoneAdminUiFieldMetaListView = {
@@ -140,7 +140,7 @@ export type KeystoneAdminUiFieldMetaListView = {
 
 export enum KeystoneAdminUiFieldMetaListViewFieldMode {
   Read = 'read',
-  Hidden = 'hidden'
+  Hidden = 'hidden',
 }
 
 export type KeystoneAdminUiListMeta = {
@@ -171,7 +171,7 @@ export type KeystoneAdminUiSort = {
 
 export enum KeystoneAdminUiSortDirection {
   Asc = 'ASC',
-  Desc = 'DESC'
+  Desc = 'DESC',
 }
 
 export type KeystoneMeta = {
@@ -222,105 +222,85 @@ export type Mutation = {
   endSession: Scalars['Boolean'];
 };
 
-
 export type MutationCreateUserArgs = {
   data?: Maybe<UserCreateInput>;
 };
 
-
 export type MutationCreateUsersArgs = {
   data?: Maybe<Array<Maybe<UsersCreateInput>>>;
 };
-
 
 export type MutationUpdateUserArgs = {
   id: Scalars['ID'];
   data?: Maybe<UserUpdateInput>;
 };
 
-
 export type MutationUpdateUsersArgs = {
   data?: Maybe<Array<Maybe<UsersUpdateInput>>>;
 };
-
 
 export type MutationDeleteUserArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MutationDeleteUsersArgs = {
   ids?: Maybe<Array<Scalars['ID']>>;
 };
-
 
 export type MutationCreateProductArgs = {
   data?: Maybe<ProductCreateInput>;
 };
 
-
 export type MutationCreateProductsArgs = {
   data?: Maybe<Array<Maybe<ProductsCreateInput>>>;
 };
-
 
 export type MutationUpdateProductArgs = {
   id: Scalars['ID'];
   data?: Maybe<ProductUpdateInput>;
 };
 
-
 export type MutationUpdateProductsArgs = {
   data?: Maybe<Array<Maybe<ProductsUpdateInput>>>;
 };
-
 
 export type MutationDeleteProductArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MutationDeleteProductsArgs = {
   ids?: Maybe<Array<Scalars['ID']>>;
 };
-
 
 export type MutationCreateProductImageArgs = {
   data?: Maybe<ProductImageCreateInput>;
 };
 
-
 export type MutationCreateProductImagesArgs = {
   data?: Maybe<Array<Maybe<ProductImagesCreateInput>>>;
 };
-
 
 export type MutationUpdateProductImageArgs = {
   id: Scalars['ID'];
   data?: Maybe<ProductImageUpdateInput>;
 };
 
-
 export type MutationUpdateProductImagesArgs = {
   data?: Maybe<Array<Maybe<ProductImagesUpdateInput>>>;
 };
-
 
 export type MutationDeleteProductImageArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MutationDeleteProductImagesArgs = {
   ids?: Maybe<Array<Scalars['ID']>>;
 };
-
 
 export type MutationAuthenticateUserWithPasswordArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
 };
-
 
 export type MutationCreateInitialUserArgs = {
   data: CreateInitialUserInput;
@@ -331,7 +311,7 @@ export enum PasswordAuthErrorCode {
   IdentityNotFound = 'IDENTITY_NOT_FOUND',
   SecretNotSet = 'SECRET_NOT_SET',
   MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES',
-  SecretMismatch = 'SECRET_MISMATCH'
+  SecretMismatch = 'SECRET_MISMATCH',
 }
 
 /**  A keystone list  */
@@ -562,7 +542,6 @@ export type Query = {
   keystone: KeystoneMeta;
 };
 
-
 export type QueryAllUsersArgs = {
   where?: Maybe<UserWhereInput>;
   search?: Maybe<Scalars['String']>;
@@ -572,11 +551,9 @@ export type QueryAllUsersArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryUserArgs = {
   where: UserWhereUniqueInput;
 };
-
 
 export type Query_AllUsersMetaArgs = {
   where?: Maybe<UserWhereInput>;
@@ -587,7 +564,6 @@ export type Query_AllUsersMetaArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryAllProductsArgs = {
   where?: Maybe<ProductWhereInput>;
   search?: Maybe<Scalars['String']>;
@@ -597,11 +573,9 @@ export type QueryAllProductsArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryProductArgs = {
   where: ProductWhereUniqueInput;
 };
-
 
 export type Query_AllProductsMetaArgs = {
   where?: Maybe<ProductWhereInput>;
@@ -612,7 +586,6 @@ export type Query_AllProductsMetaArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryAllProductImagesArgs = {
   where?: Maybe<ProductImageWhereInput>;
   search?: Maybe<Scalars['String']>;
@@ -622,11 +595,9 @@ export type QueryAllProductImagesArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-
 export type QueryProductImageArgs = {
   where: ProductImageWhereUniqueInput;
 };
-
 
 export type Query_AllProductImagesMetaArgs = {
   where?: Maybe<ProductImageWhereInput>;
@@ -636,7 +607,6 @@ export type Query_AllProductImagesMetaArgs = {
   first?: Maybe<Scalars['Int']>;
   skip?: Maybe<Scalars['Int']>;
 };
-
 
 export type Query_KsListsMetaArgs = {
   where?: Maybe<_KsListsMetaInput>;
@@ -648,7 +618,7 @@ export enum SortProductImagesBy {
   AltTextAsc = 'altText_ASC',
   AltTextDesc = 'altText_DESC',
   ProductAsc = 'product_ASC',
-  ProductDesc = 'product_DESC'
+  ProductDesc = 'product_DESC',
 }
 
 export enum SortProductsBy {
@@ -663,7 +633,7 @@ export enum SortProductsBy {
   StatusAsc = 'status_ASC',
   StatusDesc = 'status_DESC',
   PriceAsc = 'price_ASC',
-  PriceDesc = 'price_DESC'
+  PriceDesc = 'price_DESC',
 }
 
 export enum SortUsersBy {
@@ -680,9 +650,8 @@ export enum SortUsersBy {
   MagicAuthIssuedAtAsc = 'magicAuthIssuedAt_ASC',
   MagicAuthIssuedAtDesc = 'magicAuthIssuedAt_DESC',
   MagicAuthRedeemedAtAsc = 'magicAuthRedeemedAt_ASC',
-  MagicAuthRedeemedAtDesc = 'magicAuthRedeemedAt_DESC'
+  MagicAuthRedeemedAtDesc = 'magicAuthRedeemedAt_DESC',
 }
-
 
 /**  A keystone list  */
 export type User = {
@@ -705,7 +674,9 @@ export type UserAuthenticationWithPasswordFailure = {
   message: Scalars['String'];
 };
 
-export type UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure;
+export type UserAuthenticationWithPasswordResult =
+  | UserAuthenticationWithPasswordSuccess
+  | UserAuthenticationWithPasswordFailure;
 
 export type UserAuthenticationWithPasswordSuccess = {
   __typename?: 'UserAuthenticationWithPasswordSuccess';
@@ -951,7 +922,6 @@ export type _ListSchema = {
   relatedFields?: Maybe<Array<Maybe<_ListSchemaRelatedFields>>>;
 };
 
-
 export type _ListSchemaFieldsArgs = {
   where?: Maybe<_ListSchemaFieldsInput>;
 };
@@ -992,45 +962,61 @@ export type _KsListsMetaInput = {
   auxiliary?: Maybe<Scalars['Boolean']>;
 };
 
-export type AllProductQueryVariables = Exact<{ [key: string]: never; }>;
+export type AllProductQueryVariables = Exact<{
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+}>;
 
-
-export type AllProductQuery = (
-  { __typename?: 'Query' }
-  & { allProducts?: Maybe<Array<Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'name' | 'price' | 'description' | 'status'>
-    & { photo?: Maybe<(
-      { __typename?: 'ProductImage' }
-      & Pick<ProductImage, 'id'>
-      & { image?: Maybe<(
-        { __typename?: 'CloudinaryImage_File' }
-        & Pick<CloudinaryImage_File, 'id' | 'publicUrlTransformed'>
-      )> }
-    )> }
-  )>>> }
-);
+export type AllProductQuery = { __typename?: 'Query' } & {
+  allProducts?: Maybe<
+    Array<
+      Maybe<
+        { __typename?: 'Product' } & Pick<
+          Product,
+          'id' | 'name' | 'price' | 'description' | 'status'
+        > & {
+            photo?: Maybe<
+              { __typename?: 'ProductImage' } & Pick<ProductImage, 'id'> & {
+                  image?: Maybe<
+                    { __typename?: 'CloudinaryImage_File' } & Pick<
+                      CloudinaryImage_File,
+                      'id' | 'publicUrlTransformed'
+                    >
+                  >;
+                }
+            >;
+          }
+      >
+    >
+  >;
+};
 
 export type ProductQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type ProductQuery = (
-  { __typename?: 'Query' }
-  & { Product?: Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'name' | 'description' | 'status' | 'price'>
-    & { photo?: Maybe<(
-      { __typename?: 'ProductImage' }
-      & Pick<ProductImage, 'id' | 'altText'>
-      & { image?: Maybe<(
-        { __typename?: 'CloudinaryImage_File' }
-        & Pick<CloudinaryImage_File, 'id' | 'publicUrlTransformed'>
-      )> }
-    )> }
-  )> }
-);
+export type ProductQuery = { __typename?: 'Query' } & {
+  Product?: Maybe<
+    { __typename?: 'Product' } & Pick<
+      Product,
+      'id' | 'name' | 'description' | 'status' | 'price'
+    > & {
+        photo?: Maybe<
+          { __typename?: 'ProductImage' } & Pick<
+            ProductImage,
+            'id' | 'altText'
+          > & {
+              image?: Maybe<
+                { __typename?: 'CloudinaryImage_File' } & Pick<
+                  CloudinaryImage_File,
+                  'id' | 'publicUrlTransformed'
+                >
+              >;
+            }
+        >;
+      }
+  >;
+};
 
 export type CreateProductMutationVariables = Exact<{
   name?: Maybe<Scalars['String']>;
@@ -1039,14 +1025,11 @@ export type CreateProductMutationVariables = Exact<{
   price?: Maybe<Scalars['Int']>;
 }>;
 
-
-export type CreateProductMutation = (
-  { __typename?: 'Mutation' }
-  & { createProduct?: Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'name' | 'description'>
-  )> }
-);
+export type CreateProductMutation = { __typename?: 'Mutation' } & {
+  createProduct?: Maybe<
+    { __typename?: 'Product' } & Pick<Product, 'id' | 'name' | 'description'>
+  >;
+};
 
 export type UpdateProductMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1055,45 +1038,50 @@ export type UpdateProductMutationVariables = Exact<{
   price?: Maybe<Scalars['Int']>;
 }>;
 
+export type UpdateProductMutation = { __typename?: 'Mutation' } & {
+  updateProduct?: Maybe<{ __typename?: 'Product' } & Pick<Product, 'id'>>;
+};
 
-export type UpdateProductMutation = (
-  { __typename?: 'Mutation' }
-  & { updateProduct?: Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id'>
-  )> }
-);
+export type DeleteProductMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
 
-export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type DeleteProductMutation = { __typename?: 'Mutation' } & {
+  deleteProduct?: Maybe<{ __typename?: 'Product' } & Pick<Product, 'id'>>;
+};
 
+export type TotalProductsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type AllUsersQuery = (
-  { __typename?: 'Query' }
-  & { allUsers?: Maybe<Array<Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  )>>> }
-);
+export type TotalProductsQuery = { __typename?: 'Query' } & {
+  _allProductsMeta?: Maybe<
+    { __typename?: '_QueryMeta' } & Pick<_QueryMeta, 'count'>
+  >;
+};
 
+export type AllUsersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type AllUsersQuery = { __typename?: 'Query' } & {
+  allUsers?: Maybe<Array<Maybe<{ __typename?: 'User' } & Pick<User, 'id'>>>>;
+};
 
 export const AllProductDocument = gql`
-    query AllProduct {
-  allProducts {
-    id
-    name
-    price
-    description
-    status
-    photo {
+  query AllProduct($skip: Int = 0, $first: Int) {
+    allProducts(skip: $skip, first: $first) {
       id
-      image {
+      name
+      price
+      description
+      status
+      photo {
         id
-        publicUrlTransformed
+        image {
+          id
+          publicUrlTransformed
+        }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useAllProductQuery__
@@ -1107,39 +1095,62 @@ export const AllProductDocument = gql`
  * @example
  * const { data, loading, error } = useAllProductQuery({
  *   variables: {
+ *      skip: // value for 'skip'
+ *      first: // value for 'first'
  *   },
  * });
  */
-export function useAllProductQuery(baseOptions?: Apollo.QueryHookOptions<AllProductQuery, AllProductQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllProductQuery, AllProductQueryVariables>(AllProductDocument, options);
-      }
-export function useAllProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllProductQuery, AllProductQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllProductQuery, AllProductQueryVariables>(AllProductDocument, options);
-        }
+export function useAllProductQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    AllProductQuery,
+    AllProductQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<AllProductQuery, AllProductQueryVariables>(
+    AllProductDocument,
+    options,
+  );
+}
+export function useAllProductLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    AllProductQuery,
+    AllProductQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<AllProductQuery, AllProductQueryVariables>(
+    AllProductDocument,
+    options,
+  );
+}
 export type AllProductQueryHookResult = ReturnType<typeof useAllProductQuery>;
-export type AllProductLazyQueryHookResult = ReturnType<typeof useAllProductLazyQuery>;
-export type AllProductQueryResult = Apollo.QueryResult<AllProductQuery, AllProductQueryVariables>;
+export type AllProductLazyQueryHookResult = ReturnType<
+  typeof useAllProductLazyQuery
+>;
+export type AllProductQueryResult = Apollo.QueryResult<
+  AllProductQuery,
+  AllProductQueryVariables
+>;
 export const ProductDocument = gql`
-    query Product($id: ID!) {
-  Product(where: {id: $id}) {
-    id
-    name
-    description
-    status
-    price
-    photo {
+  query Product($id: ID!) {
+    Product(where: { id: $id }) {
       id
-      image {
+      name
+      description
+      status
+      price
+      photo {
         id
-        publicUrlTransformed
+        image {
+          id
+          publicUrlTransformed
+        }
+        altText
       }
-      altText
     }
   }
-}
-    `;
+`;
 
 /**
  * __useProductQuery__
@@ -1157,29 +1168,59 @@ export const ProductDocument = gql`
  *   },
  * });
  */
-export function useProductQuery(baseOptions: Apollo.QueryHookOptions<ProductQuery, ProductQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
-      }
-export function useProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductQuery, ProductQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
-        }
+export function useProductQuery(
+  baseOptions: Apollo.QueryHookOptions<ProductQuery, ProductQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProductQuery, ProductQueryVariables>(
+    ProductDocument,
+    options,
+  );
+}
+export function useProductLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ProductQuery,
+    ProductQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(
+    ProductDocument,
+    options,
+  );
+}
 export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
 export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
-export type ProductQueryResult = Apollo.QueryResult<ProductQuery, ProductQueryVariables>;
+export type ProductQueryResult = Apollo.QueryResult<
+  ProductQuery,
+  ProductQueryVariables
+>;
 export const CreateProductDocument = gql`
-    mutation CreateProduct($name: String, $description: String, $image: Upload, $price: Int) {
-  createProduct(
-    data: {name: $name, description: $description, status: "AVAILABLE", price: $price, photo: {create: {image: $image, altText: $name}}}
+  mutation CreateProduct(
+    $name: String
+    $description: String
+    $image: Upload
+    $price: Int
   ) {
-    id
-    name
-    description
+    createProduct(
+      data: {
+        name: $name
+        description: $description
+        status: "AVAILABLE"
+        price: $price
+        photo: { create: { image: $image, altText: $name } }
+      }
+    ) {
+      id
+      name
+      description
+    }
   }
-}
-    `;
-export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
+`;
+export type CreateProductMutationFn = Apollo.MutationFunction<
+  CreateProductMutation,
+  CreateProductMutationVariables
+>;
 
 /**
  * __useCreateProductMutation__
@@ -1201,24 +1242,45 @@ export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutat
  *   },
  * });
  */
-export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, options);
-      }
-export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
-export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
-export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
-export const UpdateProductDocument = gql`
-    mutation UpdateProduct($id: ID!, $name: String, $description: String, $price: Int) {
-  updateProduct(
-    id: $id
-    data: {name: $name, description: $description, price: $price}
-  ) {
-    id
-  }
+export function useCreateProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateProductMutation,
+    CreateProductMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateProductMutation,
+    CreateProductMutationVariables
+  >(CreateProductDocument, options);
 }
-    `;
-export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
+export type CreateProductMutationHookResult = ReturnType<
+  typeof useCreateProductMutation
+>;
+export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<
+  CreateProductMutation,
+  CreateProductMutationVariables
+>;
+export const UpdateProductDocument = gql`
+  mutation UpdateProduct(
+    $id: ID!
+    $name: String
+    $description: String
+    $price: Int
+  ) {
+    updateProduct(
+      id: $id
+      data: { name: $name, description: $description, price: $price }
+    ) {
+      id
+    }
+  }
+`;
+export type UpdateProductMutationFn = Apollo.MutationFunction<
+  UpdateProductMutation,
+  UpdateProductMutationVariables
+>;
 
 /**
  * __useUpdateProductMutation__
@@ -1240,20 +1302,139 @@ export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutat
  *   },
  * });
  */
-export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
-      }
-export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
-export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
-export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
-export const AllUsersDocument = gql`
-    query AllUsers {
-  allUsers {
-    id
-  }
+export function useUpdateProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateProductMutation,
+    UpdateProductMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateProductMutation,
+    UpdateProductMutationVariables
+  >(UpdateProductDocument, options);
 }
-    `;
+export type UpdateProductMutationHookResult = ReturnType<
+  typeof useUpdateProductMutation
+>;
+export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<
+  UpdateProductMutation,
+  UpdateProductMutationVariables
+>;
+export const DeleteProductDocument = gql`
+  mutation DeleteProduct($id: ID!) {
+    deleteProduct(id: $id) {
+      id
+    }
+  }
+`;
+export type DeleteProductMutationFn = Apollo.MutationFunction<
+  DeleteProductMutation,
+  DeleteProductMutationVariables
+>;
+
+/**
+ * __useDeleteProductMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductMutation, { data, loading, error }] = useDeleteProductMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteProductMutation,
+    DeleteProductMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    DeleteProductMutation,
+    DeleteProductMutationVariables
+  >(DeleteProductDocument, options);
+}
+export type DeleteProductMutationHookResult = ReturnType<
+  typeof useDeleteProductMutation
+>;
+export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
+export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<
+  DeleteProductMutation,
+  DeleteProductMutationVariables
+>;
+export const TotalProductsDocument = gql`
+  query TotalProducts {
+    _allProductsMeta {
+      count
+    }
+  }
+`;
+
+/**
+ * __useTotalProductsQuery__
+ *
+ * To run a query within a React component, call `useTotalProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTotalProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTotalProductsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTotalProductsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    TotalProductsQuery,
+    TotalProductsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<TotalProductsQuery, TotalProductsQueryVariables>(
+    TotalProductsDocument,
+    options,
+  );
+}
+export function useTotalProductsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    TotalProductsQuery,
+    TotalProductsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<TotalProductsQuery, TotalProductsQueryVariables>(
+    TotalProductsDocument,
+    options,
+  );
+}
+export type TotalProductsQueryHookResult = ReturnType<
+  typeof useTotalProductsQuery
+>;
+export type TotalProductsLazyQueryHookResult = ReturnType<
+  typeof useTotalProductsLazyQuery
+>;
+export type TotalProductsQueryResult = Apollo.QueryResult<
+  TotalProductsQuery,
+  TotalProductsQueryVariables
+>;
+export const AllUsersDocument = gql`
+  query AllUsers {
+    allUsers {
+      id
+    }
+  }
+`;
 
 /**
  * __useAllUsersQuery__
@@ -1270,14 +1451,32 @@ export const AllUsersDocument = gql`
  *   },
  * });
  */
-export function useAllUsersQuery(baseOptions?: Apollo.QueryHookOptions<AllUsersQuery, AllUsersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllUsersQuery, AllUsersQueryVariables>(AllUsersDocument, options);
-      }
-export function useAllUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllUsersQuery, AllUsersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllUsersQuery, AllUsersQueryVariables>(AllUsersDocument, options);
-        }
+export function useAllUsersQuery(
+  baseOptions?: Apollo.QueryHookOptions<AllUsersQuery, AllUsersQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<AllUsersQuery, AllUsersQueryVariables>(
+    AllUsersDocument,
+    options,
+  );
+}
+export function useAllUsersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    AllUsersQuery,
+    AllUsersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<AllUsersQuery, AllUsersQueryVariables>(
+    AllUsersDocument,
+    options,
+  );
+}
 export type AllUsersQueryHookResult = ReturnType<typeof useAllUsersQuery>;
-export type AllUsersLazyQueryHookResult = ReturnType<typeof useAllUsersLazyQuery>;
-export type AllUsersQueryResult = Apollo.QueryResult<AllUsersQuery, AllUsersQueryVariables>;
+export type AllUsersLazyQueryHookResult = ReturnType<
+  typeof useAllUsersLazyQuery
+>;
+export type AllUsersQueryResult = Apollo.QueryResult<
+  AllUsersQuery,
+  AllUsersQueryVariables
+>;

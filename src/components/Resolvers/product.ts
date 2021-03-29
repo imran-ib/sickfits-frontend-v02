@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const AllProduct = gql`
-  query AllProduct {
-    allProducts {
+  query AllProduct($skip: Int = 0, $first: Int) {
+    allProducts(skip: $skip, first: $first) {
       id
       name
       price
@@ -74,6 +74,22 @@ export const updateProduct = gql`
       data: { name: $name, description: $description, price: $price }
     ) {
       id
+    }
+  }
+`;
+
+export const DeleteProduct = gql`
+  mutation DeleteProduct($id: ID!) {
+    deleteProduct(id: $id) {
+      id
+    }
+  }
+`;
+
+export const TotalProducts = gql`
+  query TotalProducts {
+    _allProductsMeta {
+      count
     }
   }
 `;

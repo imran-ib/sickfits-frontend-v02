@@ -5,6 +5,7 @@ import formatMoney from '@/lib/formatMoney';
 import ItemStyles from '../styles/ItemStyles';
 import Title from '../styles/Title';
 import PriceTag from '../styles/PriceTag';
+import DeleteProduct from './DeleteProduct';
 
 interface Props {
   Product?: ProductProps;
@@ -30,6 +31,7 @@ const SingleProductCard: React.FC<Props> = ({ Product }) => (
       >
         edit
       </Link>
+      <DeleteProduct id={Product?.id}>Delete</DeleteProduct>
     </div>
   </ItemStyles>
 );
