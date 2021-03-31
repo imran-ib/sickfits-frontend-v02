@@ -5,11 +5,11 @@ interface InitState {
   price: number;
   description: string;
   image: string;
+  email?: string;
+  password?: string;
 }
 
-export const useForm = (
-  initialState: InitState = { name: ``, price: 0, description: ``, image: `` },
-) => {
+export const useForm = (initialState: any) => {
   const [state, setstate] = React.useState(initialState);
   const initialValues = Object.values(initialState).join(``);
   useEffect(() => {
