@@ -23,7 +23,9 @@ export const Pagination: React.FC<Props> = ({ page }) => {
   return (
     <PaginationStyles>
       <Head>
-        <title>Sick fits - page {page} of ---</title>
+        <title>
+          Sick fits - page {page} of {pageCount}
+        </title>
       </Head>
       <Link href={`/products/${page - 1}`}>
         <a aria-disabled={page <= 1}>Prev</a>

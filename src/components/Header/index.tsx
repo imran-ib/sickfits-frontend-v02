@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Navbar from './Navbar/Navbar';
+import Cart from '../Cart/Cart';
 
 const Logo = styled.h1`
   font-size: 4rem;
@@ -43,6 +44,7 @@ const Header = () => (
     </div>
     <div className="sub-bar">
       <p>Search</p>
+      <Cart />
     </div>
   </HeaderStyles>
 );

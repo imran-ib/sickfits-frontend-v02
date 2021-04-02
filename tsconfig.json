@@ -24,6 +24,6 @@
     "**/*.ts",
     "**/*.tsx",
     "src/pages/_document.js",
-    "src/components/styles/CartStyles.js"
+    "src/components/styles/CartStyles.ts"
   ]
 }

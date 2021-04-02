@@ -1,14 +1,10 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions = {};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -23,6 +19,68 @@ export type Scalars = {
 };
 
 export type AuthenticatedItem = User;
+
+/**  A keystone list  */
+export type Cart = {
+  __typename?: 'Cart';
+  id: Scalars['ID'];
+  quantity?: Maybe<Scalars['Int']>;
+  product?: Maybe<Product>;
+  user?: Maybe<User>;
+};
+
+export type CartCreateInput = {
+  quantity?: Maybe<Scalars['Int']>;
+  product?: Maybe<ProductRelateToOneInput>;
+  user?: Maybe<UserRelateToOneInput>;
+};
+
+export type CartRelateToManyInput = {
+  create?: Maybe<Array<Maybe<CartCreateInput>>>;
+  connect?: Maybe<Array<Maybe<CartWhereUniqueInput>>>;
+  disconnect?: Maybe<Array<Maybe<CartWhereUniqueInput>>>;
+  disconnectAll?: Maybe<Scalars['Boolean']>;
+};
+
+export type CartUpdateInput = {
+  quantity?: Maybe<Scalars['Int']>;
+  product?: Maybe<ProductRelateToOneInput>;
+  user?: Maybe<UserRelateToOneInput>;
+};
+
+export type CartWhereInput = {
+  AND?: Maybe<Array<Maybe<CartWhereInput>>>;
+  OR?: Maybe<Array<Maybe<CartWhereInput>>>;
+  id?: Maybe<Scalars['ID']>;
+  id_not?: Maybe<Scalars['ID']>;
+  id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  quantity?: Maybe<Scalars['Int']>;
+  quantity_not?: Maybe<Scalars['Int']>;
+  quantity_lt?: Maybe<Scalars['Int']>;
+  quantity_lte?: Maybe<Scalars['Int']>;
+  quantity_gt?: Maybe<Scalars['Int']>;
+  quantity_gte?: Maybe<Scalars['Int']>;
+  quantity_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  quantity_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  product?: Maybe<ProductWhereInput>;
+  product_is_null?: Maybe<Scalars['Boolean']>;
+  user?: Maybe<UserWhereInput>;
+  user_is_null?: Maybe<Scalars['Boolean']>;
+};
+
+export type CartWhereUniqueInput = {
+  id: Scalars['ID'];
+};
+
+export type CartsCreateInput = {
+  data?: Maybe<CartCreateInput>;
+};
+
+export type CartsUpdateInput = {
+  id: Scalars['ID'];
+  data?: Maybe<CartUpdateInput>;
+};
 
 /**
  * Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
@@ -73,6 +131,7 @@ export type CloudinaryImage_File = {
   publicUrlTransformed?: Maybe<Scalars['String']>;
 };
 
+
 export type CloudinaryImage_FilePublicUrlTransformedArgs = {
   transformation?: Maybe<CloudinaryImageFormat>;
 };
@@ -83,6 +142,7 @@ export type CreateInitialUserInput = {
   password?: Maybe<Scalars['String']>;
 };
 
+
 export type KeystoneAdminMeta = {
   __typename?: 'KeystoneAdminMeta';
   enableSignout: Scalars['Boolean'];
@@ -90,6 +150,7 @@ export type KeystoneAdminMeta = {
   lists: Array<KeystoneAdminUiListMeta>;
   list?: Maybe<KeystoneAdminUiListMeta>;
 };
+
 
 export type KeystoneAdminMetaListArgs = {
   key: Scalars['String'];
@@ -108,6 +169,7 @@ export type KeystoneAdminUiFieldMeta = {
   itemView?: Maybe<KeystoneAdminUiFieldMetaItemView>;
 };
 
+
 export type KeystoneAdminUiFieldMetaItemViewArgs = {
   id: Scalars['ID'];
 };
@@ -119,7 +181,7 @@ export type KeystoneAdminUiFieldMetaCreateView = {
 
 export enum KeystoneAdminUiFieldMetaCreateViewFieldMode {
   Edit = 'edit',
-  Hidden = 'hidden',
+  Hidden = 'hidden'
 }
 
 export type KeystoneAdminUiFieldMetaItemView = {
@@ -130,7 +192,7 @@ export type KeystoneAdminUiFieldMetaItemView = {
 export enum KeystoneAdminUiFieldMetaItemViewFieldMode {
   Edit = 'edit',
   Read = 'read',
-  Hidden = 'hidden',
+  Hidden = 'hidden'
 }
 
 export type KeystoneAdminUiFieldMetaListView = {
@@ -140,7 +202,7 @@ export type KeystoneAdminUiFieldMetaListView = {
 
 export enum KeystoneAdminUiFieldMetaListViewFieldMode {
   Read = 'read',
-  Hidden = 'hidden',
+  Hidden = 'hidden'
 }
 
 export type KeystoneAdminUiListMeta = {
@@ -171,7 +233,7 @@ export type KeystoneAdminUiSort = {
 
 export enum KeystoneAdminUiSortDirection {
   Asc = 'ASC',
-  Desc = 'DESC',
+  Desc = 'DESC'
 }
 
 export type KeystoneMeta = {
@@ -217,6 +279,18 @@ export type Mutation = {
   deleteProductImage?: Maybe<ProductImage>;
   /**  Delete multiple ProductImage items by ID.  */
   deleteProductImages?: Maybe<Array<Maybe<ProductImage>>>;
+  /**  Create a single Cart item.  */
+  createCart?: Maybe<Cart>;
+  /**  Create multiple Cart items.  */
+  createCarts?: Maybe<Array<Maybe<Cart>>>;
+  /**  Update a single Cart item by ID.  */
+  updateCart?: Maybe<Cart>;
+  /**  Update multiple Cart items by ID.  */
+  updateCarts?: Maybe<Array<Maybe<Cart>>>;
+  /**  Delete a single Cart item by ID.  */
+  deleteCart?: Maybe<Cart>;
+  /**  Delete multiple Cart items by ID.  */
+  deleteCarts?: Maybe<Array<Maybe<Cart>>>;
   authenticateUserWithPassword: UserAuthenticationWithPasswordResult;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
   sendUserPasswordResetLink?: Maybe<SendUserPasswordResetLinkResult>;
@@ -224,93 +298,146 @@ export type Mutation = {
   endSession: Scalars['Boolean'];
 };
 
+
 export type MutationCreateUserArgs = {
   data?: Maybe<UserCreateInput>;
 };
 
+
 export type MutationCreateUsersArgs = {
   data?: Maybe<Array<Maybe<UsersCreateInput>>>;
 };
+
 
 export type MutationUpdateUserArgs = {
   id: Scalars['ID'];
   data?: Maybe<UserUpdateInput>;
 };
 
+
 export type MutationUpdateUsersArgs = {
   data?: Maybe<Array<Maybe<UsersUpdateInput>>>;
 };
+
 
 export type MutationDeleteUserArgs = {
   id: Scalars['ID'];
 };
 
+
 export type MutationDeleteUsersArgs = {
   ids?: Maybe<Array<Scalars['ID']>>;
 };
+
 
 export type MutationCreateProductArgs = {
   data?: Maybe<ProductCreateInput>;
 };
 
+
 export type MutationCreateProductsArgs = {
   data?: Maybe<Array<Maybe<ProductsCreateInput>>>;
 };
+
 
 export type MutationUpdateProductArgs = {
   id: Scalars['ID'];
   data?: Maybe<ProductUpdateInput>;
 };
 
+
 export type MutationUpdateProductsArgs = {
   data?: Maybe<Array<Maybe<ProductsUpdateInput>>>;
 };
+
 
 export type MutationDeleteProductArgs = {
   id: Scalars['ID'];
 };
 
+
 export type MutationDeleteProductsArgs = {
   ids?: Maybe<Array<Scalars['ID']>>;
 };
+
 
 export type MutationCreateProductImageArgs = {
   data?: Maybe<ProductImageCreateInput>;
 };
 
+
 export type MutationCreateProductImagesArgs = {
   data?: Maybe<Array<Maybe<ProductImagesCreateInput>>>;
 };
+
 
 export type MutationUpdateProductImageArgs = {
   id: Scalars['ID'];
   data?: Maybe<ProductImageUpdateInput>;
 };
 
+
 export type MutationUpdateProductImagesArgs = {
   data?: Maybe<Array<Maybe<ProductImagesUpdateInput>>>;
 };
+
 
 export type MutationDeleteProductImageArgs = {
   id: Scalars['ID'];
 };
 
+
 export type MutationDeleteProductImagesArgs = {
   ids?: Maybe<Array<Scalars['ID']>>;
 };
+
+
+export type MutationCreateCartArgs = {
+  data?: Maybe<CartCreateInput>;
+};
+
+
+export type MutationCreateCartsArgs = {
+  data?: Maybe<Array<Maybe<CartsCreateInput>>>;
+};
+
+
+export type MutationUpdateCartArgs = {
+  id: Scalars['ID'];
+  data?: Maybe<CartUpdateInput>;
+};
+
+
+export type MutationUpdateCartsArgs = {
+  data?: Maybe<Array<Maybe<CartsUpdateInput>>>;
+};
+
+
+export type MutationDeleteCartArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteCartsArgs = {
+  ids?: Maybe<Array<Scalars['ID']>>;
+};
+
 
 export type MutationAuthenticateUserWithPasswordArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
 };
 
+
 export type MutationCreateInitialUserArgs = {
   data: CreateInitialUserInput;
 };
 
+
 export type MutationSendUserPasswordResetLinkArgs = {
   email: Scalars['String'];
 };
+
 
 export type MutationRedeemUserPasswordResetTokenArgs = {
   email: Scalars['String'];
@@ -323,7 +450,7 @@ export enum PasswordAuthErrorCode {
   IdentityNotFound = 'IDENTITY_NOT_FOUND',
   SecretNotSet = 'SECRET_NOT_SET',
   MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES',
-  SecretMismatch = 'SECRET_MISMATCH',
+  SecretMismatch = 'SECRET_MISMATCH'
 }
 
 export enum PasswordResetRedemptionErrorCode {
@@ -333,12 +460,12 @@ export enum PasswordResetRedemptionErrorCode {
   TokenNotSet = 'TOKEN_NOT_SET',
   TokenMismatch = 'TOKEN_MISMATCH',
   TokenExpired = 'TOKEN_EXPIRED',
-  TokenRedeemed = 'TOKEN_REDEEMED',
+  TokenRedeemed = 'TOKEN_REDEEMED'
 }
 
 export enum PasswordResetRequestErrorCode {
   IdentityNotFound = 'IDENTITY_NOT_FOUND',
-  MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES',
+  MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES'
 }
 
 /**  A keystone list  */
@@ -561,6 +688,14 @@ export type Query = {
   _allProductImagesMeta?: Maybe<_QueryMeta>;
   /**  Retrieve the meta-data for the ProductImage list.  */
   _ProductImagesMeta?: Maybe<_ListMeta>;
+  /**  Search for all Cart items which match the where clause.  */
+  allCarts?: Maybe<Array<Maybe<Cart>>>;
+  /**  Search for the Cart item with the matching ID.  */
+  Cart?: Maybe<Cart>;
+  /**  Perform a meta-query on all Cart items which match the where clause.  */
+  _allCartsMeta?: Maybe<_QueryMeta>;
+  /**  Retrieve the meta-data for the Cart list.  */
+  _CartsMeta?: Maybe<_ListMeta>;
   /**  Retrieve the meta-data for all lists.  */
   _ksListsMeta?: Maybe<Array<Maybe<_ListMeta>>>;
   /** The version of the Keystone application serving this API. */
@@ -569,6 +704,7 @@ export type Query = {
   validateUserPasswordResetToken?: Maybe<ValidateUserPasswordResetTokenResult>;
   keystone: KeystoneMeta;
 };
+
 
 export type QueryAllUsersArgs = {
   where?: Maybe<UserWhereInput>;
@@ -579,9 +715,11 @@ export type QueryAllUsersArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+
 export type QueryUserArgs = {
   where: UserWhereUniqueInput;
 };
+
 
 export type Query_AllUsersMetaArgs = {
   where?: Maybe<UserWhereInput>;
@@ -592,6 +730,7 @@ export type Query_AllUsersMetaArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+
 export type QueryAllProductsArgs = {
   where?: Maybe<ProductWhereInput>;
   search?: Maybe<Scalars['String']>;
@@ -601,9 +740,11 @@ export type QueryAllProductsArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+
 export type QueryProductArgs = {
   where: ProductWhereUniqueInput;
 };
+
 
 export type Query_AllProductsMetaArgs = {
   where?: Maybe<ProductWhereInput>;
@@ -614,6 +755,7 @@ export type Query_AllProductsMetaArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+
 export type QueryAllProductImagesArgs = {
   where?: Maybe<ProductImageWhereInput>;
   search?: Maybe<Scalars['String']>;
@@ -623,9 +765,11 @@ export type QueryAllProductImagesArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+
 export type QueryProductImageArgs = {
   where: ProductImageWhereUniqueInput;
 };
+
 
 export type Query_AllProductImagesMetaArgs = {
   where?: Maybe<ProductImageWhereInput>;
@@ -636,9 +780,36 @@ export type Query_AllProductImagesMetaArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+
+export type QueryAllCartsArgs = {
+  where?: Maybe<CartWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortCartsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryCartArgs = {
+  where: CartWhereUniqueInput;
+};
+
+
+export type Query_AllCartsMetaArgs = {
+  where?: Maybe<CartWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortCartsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
 export type Query_KsListsMetaArgs = {
   where?: Maybe<_KsListsMetaInput>;
 };
+
 
 export type QueryValidateUserPasswordResetTokenArgs = {
   email: Scalars['String'];
@@ -657,13 +828,24 @@ export type SendUserPasswordResetLinkResult = {
   message: Scalars['String'];
 };
 
+export enum SortCartsBy {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  QuantityAsc = 'quantity_ASC',
+  QuantityDesc = 'quantity_DESC',
+  ProductAsc = 'product_ASC',
+  ProductDesc = 'product_DESC',
+  UserAsc = 'user_ASC',
+  UserDesc = 'user_DESC'
+}
+
 export enum SortProductImagesBy {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   AltTextAsc = 'altText_ASC',
   AltTextDesc = 'altText_DESC',
   ProductAsc = 'product_ASC',
-  ProductDesc = 'product_DESC',
+  ProductDesc = 'product_DESC'
 }
 
 export enum SortProductsBy {
@@ -678,7 +860,7 @@ export enum SortProductsBy {
   StatusAsc = 'status_ASC',
   StatusDesc = 'status_DESC',
   PriceAsc = 'price_ASC',
-  PriceDesc = 'price_DESC',
+  PriceDesc = 'price_DESC'
 }
 
 export enum SortUsersBy {
@@ -688,6 +870,8 @@ export enum SortUsersBy {
   NameDesc = 'name_DESC',
   EmailAsc = 'email_ASC',
   EmailDesc = 'email_DESC',
+  CartAsc = 'cart_ASC',
+  CartDesc = 'cart_DESC',
   PasswordResetIssuedAtAsc = 'passwordResetIssuedAt_ASC',
   PasswordResetIssuedAtDesc = 'passwordResetIssuedAt_DESC',
   PasswordResetRedeemedAtAsc = 'passwordResetRedeemedAt_ASC',
@@ -695,8 +879,9 @@ export enum SortUsersBy {
   MagicAuthIssuedAtAsc = 'magicAuthIssuedAt_ASC',
   MagicAuthIssuedAtDesc = 'magicAuthIssuedAt_DESC',
   MagicAuthRedeemedAtAsc = 'magicAuthRedeemedAt_ASC',
-  MagicAuthRedeemedAtDesc = 'magicAuthRedeemedAt_DESC',
+  MagicAuthRedeemedAtDesc = 'magicAuthRedeemedAt_DESC'
 }
+
 
 /**  A keystone list  */
 export type User = {
@@ -705,6 +890,8 @@ export type User = {
   name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   password_is_set?: Maybe<Scalars['Boolean']>;
+  cart: Array<Cart>;
+  _cartMeta?: Maybe<_QueryMeta>;
   passwordResetToken_is_set?: Maybe<Scalars['Boolean']>;
   passwordResetIssuedAt?: Maybe<Scalars['String']>;
   passwordResetRedeemedAt?: Maybe<Scalars['String']>;
@@ -713,15 +900,35 @@ export type User = {
   magicAuthRedeemedAt?: Maybe<Scalars['String']>;
 };
 
+
+/**  A keystone list  */
+export type UserCartArgs = {
+  where?: Maybe<CartWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortCartsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+/**  A keystone list  */
+export type User_CartMetaArgs = {
+  where?: Maybe<CartWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortCartsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
 export type UserAuthenticationWithPasswordFailure = {
   __typename?: 'UserAuthenticationWithPasswordFailure';
   code: PasswordAuthErrorCode;
   message: Scalars['String'];
 };
 
-export type UserAuthenticationWithPasswordResult =
-  | UserAuthenticationWithPasswordSuccess
-  | UserAuthenticationWithPasswordFailure;
+export type UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure;
 
 export type UserAuthenticationWithPasswordSuccess = {
   __typename?: 'UserAuthenticationWithPasswordSuccess';
@@ -733,6 +940,7 @@ export type UserCreateInput = {
   name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  cart?: Maybe<CartRelateToManyInput>;
   passwordResetToken?: Maybe<Scalars['String']>;
   passwordResetIssuedAt?: Maybe<Scalars['String']>;
   passwordResetRedeemedAt?: Maybe<Scalars['String']>;
@@ -741,10 +949,18 @@ export type UserCreateInput = {
   magicAuthRedeemedAt?: Maybe<Scalars['String']>;
 };
 
+export type UserRelateToOneInput = {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput>;
+  disconnectAll?: Maybe<Scalars['Boolean']>;
+};
+
 export type UserUpdateInput = {
   name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  cart?: Maybe<CartRelateToManyInput>;
   passwordResetToken?: Maybe<Scalars['String']>;
   passwordResetIssuedAt?: Maybe<Scalars['String']>;
   passwordResetRedeemedAt?: Maybe<Scalars['String']>;
@@ -797,6 +1013,12 @@ export type UserWhereInput = {
   email_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   email_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   password_is_set?: Maybe<Scalars['Boolean']>;
+  /**  condition must be true for all nodes  */
+  cart_every?: Maybe<CartWhereInput>;
+  /**  condition must be true for at least 1 node  */
+  cart_some?: Maybe<CartWhereInput>;
+  /**  condition must be false for all nodes  */
+  cart_none?: Maybe<CartWhereInput>;
   passwordResetToken_is_set?: Maybe<Scalars['Boolean']>;
   passwordResetIssuedAt?: Maybe<Scalars['String']>;
   passwordResetIssuedAt_not?: Maybe<Scalars['String']>;
@@ -973,6 +1195,7 @@ export type _ListSchema = {
   relatedFields?: Maybe<Array<Maybe<_ListSchemaRelatedFields>>>;
 };
 
+
 export type _ListSchemaFieldsArgs = {
   where?: Maybe<_ListSchemaFieldsInput>;
 };
@@ -1018,56 +1241,43 @@ export type AllProductQueryVariables = Exact<{
   first?: Maybe<Scalars['Int']>;
 }>;
 
-export type AllProductQuery = { __typename?: 'Query' } & {
-  allProducts?: Maybe<
-    Array<
-      Maybe<
-        { __typename?: 'Product' } & Pick<
-          Product,
-          'id' | 'name' | 'price' | 'description' | 'status'
-        > & {
-            photo?: Maybe<
-              { __typename?: 'ProductImage' } & Pick<ProductImage, 'id'> & {
-                  image?: Maybe<
-                    { __typename?: 'CloudinaryImage_File' } & Pick<
-                      CloudinaryImage_File,
-                      'id' | 'publicUrlTransformed'
-                    >
-                  >;
-                }
-            >;
-          }
-      >
-    >
-  >;
-};
+
+export type AllProductQuery = (
+  { __typename?: 'Query' }
+  & { allProducts?: Maybe<Array<Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'name' | 'price' | 'description' | 'status'>
+    & { photo?: Maybe<(
+      { __typename?: 'ProductImage' }
+      & Pick<ProductImage, 'id'>
+      & { image?: Maybe<(
+        { __typename?: 'CloudinaryImage_File' }
+        & Pick<CloudinaryImage_File, 'id' | 'publicUrlTransformed'>
+      )> }
+    )> }
+  )>>> }
+);
 
 export type ProductQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type ProductQuery = { __typename?: 'Query' } & {
-  Product?: Maybe<
-    { __typename?: 'Product' } & Pick<
-      Product,
-      'id' | 'name' | 'description' | 'status' | 'price'
-    > & {
-        photo?: Maybe<
-          { __typename?: 'ProductImage' } & Pick<
-            ProductImage,
-            'id' | 'altText'
-          > & {
-              image?: Maybe<
-                { __typename?: 'CloudinaryImage_File' } & Pick<
-                  CloudinaryImage_File,
-                  'id' | 'publicUrlTransformed'
-                >
-              >;
-            }
-        >;
-      }
-  >;
-};
+
+export type ProductQuery = (
+  { __typename?: 'Query' }
+  & { Product?: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'name' | 'description' | 'status' | 'price'>
+    & { photo?: Maybe<(
+      { __typename?: 'ProductImage' }
+      & Pick<ProductImage, 'id' | 'altText'>
+      & { image?: Maybe<(
+        { __typename?: 'CloudinaryImage_File' }
+        & Pick<CloudinaryImage_File, 'id' | 'publicUrlTransformed'>
+      )> }
+    )> }
+  )> }
+);
 
 export type CreateProductMutationVariables = Exact<{
   name?: Maybe<Scalars['String']>;
@@ -1076,11 +1286,14 @@ export type CreateProductMutationVariables = Exact<{
   price?: Maybe<Scalars['Int']>;
 }>;
 
-export type CreateProductMutation = { __typename?: 'Mutation' } & {
-  createProduct?: Maybe<
-    { __typename?: 'Product' } & Pick<Product, 'id' | 'name' | 'description'>
-  >;
-};
+
+export type CreateProductMutation = (
+  { __typename?: 'Mutation' }
+  & { createProduct?: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'name' | 'description'>
+  )> }
+);
 
 export type UpdateProductMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1089,63 +1302,104 @@ export type UpdateProductMutationVariables = Exact<{
   price?: Maybe<Scalars['Int']>;
 }>;
 
-export type UpdateProductMutation = { __typename?: 'Mutation' } & {
-  updateProduct?: Maybe<{ __typename?: 'Product' } & Pick<Product, 'id'>>;
-};
+
+export type UpdateProductMutation = (
+  { __typename?: 'Mutation' }
+  & { updateProduct?: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id'>
+  )> }
+);
 
 export type DeleteProductMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type DeleteProductMutation = { __typename?: 'Mutation' } & {
-  deleteProduct?: Maybe<{ __typename?: 'Product' } & Pick<Product, 'id'>>;
-};
 
-export type TotalProductsQueryVariables = Exact<{ [key: string]: never }>;
+export type DeleteProductMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteProduct?: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id'>
+  )> }
+);
 
-export type TotalProductsQuery = { __typename?: 'Query' } & {
-  _allProductsMeta?: Maybe<
-    { __typename?: '_QueryMeta' } & Pick<_QueryMeta, 'count'>
-  >;
-};
+export type TotalProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type AllUsersQueryVariables = Exact<{ [key: string]: never }>;
 
-export type AllUsersQuery = { __typename?: 'Query' } & {
-  allUsers?: Maybe<Array<Maybe<{ __typename?: 'User' } & Pick<User, 'id'>>>>;
-};
+export type TotalProductsQuery = (
+  { __typename?: 'Query' }
+  & { _allProductsMeta?: Maybe<(
+    { __typename?: '_QueryMeta' }
+    & Pick<_QueryMeta, 'count'>
+  )> }
+);
 
-export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
+export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type CurrentUserQuery = { __typename?: 'Query' } & {
-  authenticatedItem?: Maybe<
-    { __typename?: 'User' } & Pick<User, 'id' | 'email' | 'name'>
-  >;
-};
+
+export type AllUsersQuery = (
+  { __typename?: 'Query' }
+  & { allUsers?: Maybe<Array<Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  )>>> }
+);
+
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUserQuery = (
+  { __typename?: 'Query' }
+  & { authenticatedItem?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'name'>
+    & { cart: Array<(
+      { __typename?: 'Cart' }
+      & Pick<Cart, 'id' | 'quantity'>
+      & { product?: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'id' | 'name' | 'price' | 'description'>
+        & { photo?: Maybe<(
+          { __typename?: 'ProductImage' }
+          & { image?: Maybe<(
+            { __typename?: 'CloudinaryImage_File' }
+            & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+          )> }
+        )> }
+      )> }
+    )> }
+  )> }
+);
 
 export type SigninMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
-export type SigninMutation = { __typename?: 'Mutation' } & {
-  authenticateUserWithPassword:
-    | ({ __typename?: 'UserAuthenticationWithPasswordSuccess' } & Pick<
-        UserAuthenticationWithPasswordSuccess,
-        'sessionToken'
-      > & { item: { __typename?: 'User' } & Pick<User, 'id' | 'name'> })
-    | ({ __typename?: 'UserAuthenticationWithPasswordFailure' } & Pick<
-        UserAuthenticationWithPasswordFailure,
-        'code' | 'message'
-      >);
-};
 
-export type SignoutMutationVariables = Exact<{ [key: string]: never }>;
+export type SigninMutation = (
+  { __typename?: 'Mutation' }
+  & { authenticateUserWithPassword: (
+    { __typename?: 'UserAuthenticationWithPasswordSuccess' }
+    & Pick<UserAuthenticationWithPasswordSuccess, 'sessionToken'>
+    & { item: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name'>
+    ) }
+  ) | (
+    { __typename?: 'UserAuthenticationWithPasswordFailure' }
+    & Pick<UserAuthenticationWithPasswordFailure, 'code' | 'message'>
+  ) }
+);
 
-export type SignoutMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'endSession'
->;
+export type SignoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SignoutMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'endSession'>
+);
 
 export type CreateUserMutationVariables = Exact<{
   name?: Maybe<Scalars['String']>;
@@ -1153,24 +1407,27 @@ export type CreateUserMutationVariables = Exact<{
   password?: Maybe<Scalars['String']>;
 }>;
 
-export type CreateUserMutation = { __typename?: 'Mutation' } & {
-  createUser?: Maybe<
-    { __typename?: 'User' } & Pick<User, 'id' | 'name' | 'email'>
-  >;
-};
+
+export type CreateUserMutation = (
+  { __typename?: 'Mutation' }
+  & { createUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'email'>
+  )> }
+);
 
 export type ResetPasswordMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
-export type ResetPasswordMutation = { __typename?: 'Mutation' } & {
-  sendUserPasswordResetLink?: Maybe<
-    { __typename?: 'SendUserPasswordResetLinkResult' } & Pick<
-      SendUserPasswordResetLinkResult,
-      'code' | 'message'
-    >
-  >;
-};
+
+export type ResetPasswordMutation = (
+  { __typename?: 'Mutation' }
+  & { sendUserPasswordResetLink?: Maybe<(
+    { __typename?: 'SendUserPasswordResetLinkResult' }
+    & Pick<SendUserPasswordResetLinkResult, 'code' | 'message'>
+  )> }
+);
 
 export type Reset_PasswordMutationVariables = Exact<{
   email: Scalars['String'];
@@ -1178,33 +1435,34 @@ export type Reset_PasswordMutationVariables = Exact<{
   password: Scalars['String'];
 }>;
 
-export type Reset_PasswordMutation = { __typename?: 'Mutation' } & {
-  redeemUserPasswordResetToken?: Maybe<
-    { __typename?: 'RedeemUserPasswordResetTokenResult' } & Pick<
-      RedeemUserPasswordResetTokenResult,
-      'code' | 'message'
-    >
-  >;
-};
+
+export type Reset_PasswordMutation = (
+  { __typename?: 'Mutation' }
+  & { redeemUserPasswordResetToken?: Maybe<(
+    { __typename?: 'RedeemUserPasswordResetTokenResult' }
+    & Pick<RedeemUserPasswordResetTokenResult, 'code' | 'message'>
+  )> }
+);
+
 
 export const AllProductDocument = gql`
-  query AllProduct($skip: Int = 0, $first: Int) {
-    allProducts(skip: $skip, first: $first) {
+    query AllProduct($skip: Int = 0, $first: Int) {
+  allProducts(skip: $skip, first: $first) {
+    id
+    name
+    price
+    description
+    status
+    photo {
       id
-      name
-      price
-      description
-      status
-      photo {
+      image {
         id
-        image {
-          id
-          publicUrlTransformed
-        }
+        publicUrlTransformed
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useAllProductQuery__
@@ -1223,57 +1481,36 @@ export const AllProductDocument = gql`
  *   },
  * });
  */
-export function useAllProductQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    AllProductQuery,
-    AllProductQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<AllProductQuery, AllProductQueryVariables>(
-    AllProductDocument,
-    options,
-  );
-}
-export function useAllProductLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    AllProductQuery,
-    AllProductQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<AllProductQuery, AllProductQueryVariables>(
-    AllProductDocument,
-    options,
-  );
-}
-export type AllProductQueryHookResult = ReturnType<typeof useAllProductQuery>;
-export type AllProductLazyQueryHookResult = ReturnType<
-  typeof useAllProductLazyQuery
->;
-export type AllProductQueryResult = Apollo.QueryResult<
-  AllProductQuery,
-  AllProductQueryVariables
->;
-export const ProductDocument = gql`
-  query Product($id: ID!) {
-    Product(where: { id: $id }) {
-      id
-      name
-      description
-      status
-      price
-      photo {
-        id
-        image {
-          id
-          publicUrlTransformed
-        }
-        altText
+export function useAllProductQuery(baseOptions?: Apollo.QueryHookOptions<AllProductQuery, AllProductQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllProductQuery, AllProductQueryVariables>(AllProductDocument, options);
       }
+export function useAllProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllProductQuery, AllProductQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllProductQuery, AllProductQueryVariables>(AllProductDocument, options);
+        }
+export type AllProductQueryHookResult = ReturnType<typeof useAllProductQuery>;
+export type AllProductLazyQueryHookResult = ReturnType<typeof useAllProductLazyQuery>;
+export type AllProductQueryResult = Apollo.QueryResult<AllProductQuery, AllProductQueryVariables>;
+export const ProductDocument = gql`
+    query Product($id: ID!) {
+  Product(where: {id: $id}) {
+    id
+    name
+    description
+    status
+    price
+    photo {
+      id
+      image {
+        id
+        publicUrlTransformed
+      }
+      altText
     }
   }
-`;
+}
+    `;
 
 /**
  * __useProductQuery__
@@ -1291,59 +1528,29 @@ export const ProductDocument = gql`
  *   },
  * });
  */
-export function useProductQuery(
-  baseOptions: Apollo.QueryHookOptions<ProductQuery, ProductQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ProductQuery, ProductQueryVariables>(
-    ProductDocument,
-    options,
-  );
-}
-export function useProductLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ProductQuery,
-    ProductQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(
-    ProductDocument,
-    options,
-  );
-}
+export function useProductQuery(baseOptions: Apollo.QueryHookOptions<ProductQuery, ProductQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
+      }
+export function useProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductQuery, ProductQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
+        }
 export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
 export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
-export type ProductQueryResult = Apollo.QueryResult<
-  ProductQuery,
-  ProductQueryVariables
->;
+export type ProductQueryResult = Apollo.QueryResult<ProductQuery, ProductQueryVariables>;
 export const CreateProductDocument = gql`
-  mutation CreateProduct(
-    $name: String
-    $description: String
-    $image: Upload
-    $price: Int
+    mutation CreateProduct($name: String, $description: String, $image: Upload, $price: Int) {
+  createProduct(
+    data: {name: $name, description: $description, status: "AVAILABLE", price: $price, photo: {create: {image: $image, altText: $name}}}
   ) {
-    createProduct(
-      data: {
-        name: $name
-        description: $description
-        status: "AVAILABLE"
-        price: $price
-        photo: { create: { image: $image, altText: $name } }
-      }
-    ) {
-      id
-      name
-      description
-    }
+    id
+    name
+    description
   }
-`;
-export type CreateProductMutationFn = Apollo.MutationFunction<
-  CreateProductMutation,
-  CreateProductMutationVariables
->;
+}
+    `;
+export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
 
 /**
  * __useCreateProductMutation__
@@ -1365,45 +1572,24 @@ export type CreateProductMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateProductMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateProductMutation,
-    CreateProductMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateProductMutation,
-    CreateProductMutationVariables
-  >(CreateProductDocument, options);
-}
-export type CreateProductMutationHookResult = ReturnType<
-  typeof useCreateProductMutation
->;
+export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, options);
+      }
+export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
 export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
-export type CreateProductMutationOptions = Apollo.BaseMutationOptions<
-  CreateProductMutation,
-  CreateProductMutationVariables
->;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
 export const UpdateProductDocument = gql`
-  mutation UpdateProduct(
-    $id: ID!
-    $name: String
-    $description: String
-    $price: Int
+    mutation UpdateProduct($id: ID!, $name: String, $description: String, $price: Int) {
+  updateProduct(
+    id: $id
+    data: {name: $name, description: $description, price: $price}
   ) {
-    updateProduct(
-      id: $id
-      data: { name: $name, description: $description, price: $price }
-    ) {
-      id
-    }
+    id
   }
-`;
-export type UpdateProductMutationFn = Apollo.MutationFunction<
-  UpdateProductMutation,
-  UpdateProductMutationVariables
->;
+}
+    `;
+export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
 
 /**
  * __useUpdateProductMutation__
@@ -1425,37 +1611,21 @@ export type UpdateProductMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useUpdateProductMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    UpdateProductMutation,
-    UpdateProductMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    UpdateProductMutation,
-    UpdateProductMutationVariables
-  >(UpdateProductDocument, options);
-}
-export type UpdateProductMutationHookResult = ReturnType<
-  typeof useUpdateProductMutation
->;
+export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
+      }
+export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
 export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
-export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<
-  UpdateProductMutation,
-  UpdateProductMutationVariables
->;
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
 export const DeleteProductDocument = gql`
-  mutation DeleteProduct($id: ID!) {
-    deleteProduct(id: $id) {
-      id
-    }
+    mutation DeleteProduct($id: ID!) {
+  deleteProduct(id: $id) {
+    id
   }
-`;
-export type DeleteProductMutationFn = Apollo.MutationFunction<
-  DeleteProductMutation,
-  DeleteProductMutationVariables
->;
+}
+    `;
+export type DeleteProductMutationFn = Apollo.MutationFunction<DeleteProductMutation, DeleteProductMutationVariables>;
 
 /**
  * __useDeleteProductMutation__
@@ -1474,33 +1644,20 @@ export type DeleteProductMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useDeleteProductMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DeleteProductMutation,
-    DeleteProductMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    DeleteProductMutation,
-    DeleteProductMutationVariables
-  >(DeleteProductDocument, options);
-}
-export type DeleteProductMutationHookResult = ReturnType<
-  typeof useDeleteProductMutation
->;
+export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductMutation, DeleteProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, options);
+      }
+export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
 export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
-export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<
-  DeleteProductMutation,
-  DeleteProductMutationVariables
->;
+export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
 export const TotalProductsDocument = gql`
-  query TotalProducts {
-    _allProductsMeta {
-      count
-    }
+    query TotalProducts {
+  _allProductsMeta {
+    count
   }
-`;
+}
+    `;
 
 /**
  * __useTotalProductsQuery__
@@ -1517,47 +1674,24 @@ export const TotalProductsDocument = gql`
  *   },
  * });
  */
-export function useTotalProductsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    TotalProductsQuery,
-    TotalProductsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<TotalProductsQuery, TotalProductsQueryVariables>(
-    TotalProductsDocument,
-    options,
-  );
-}
-export function useTotalProductsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    TotalProductsQuery,
-    TotalProductsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<TotalProductsQuery, TotalProductsQueryVariables>(
-    TotalProductsDocument,
-    options,
-  );
-}
-export type TotalProductsQueryHookResult = ReturnType<
-  typeof useTotalProductsQuery
->;
-export type TotalProductsLazyQueryHookResult = ReturnType<
-  typeof useTotalProductsLazyQuery
->;
-export type TotalProductsQueryResult = Apollo.QueryResult<
-  TotalProductsQuery,
-  TotalProductsQueryVariables
->;
+export function useTotalProductsQuery(baseOptions?: Apollo.QueryHookOptions<TotalProductsQuery, TotalProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TotalProductsQuery, TotalProductsQueryVariables>(TotalProductsDocument, options);
+      }
+export function useTotalProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TotalProductsQuery, TotalProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TotalProductsQuery, TotalProductsQueryVariables>(TotalProductsDocument, options);
+        }
+export type TotalProductsQueryHookResult = ReturnType<typeof useTotalProductsQuery>;
+export type TotalProductsLazyQueryHookResult = ReturnType<typeof useTotalProductsLazyQuery>;
+export type TotalProductsQueryResult = Apollo.QueryResult<TotalProductsQuery, TotalProductsQueryVariables>;
 export const AllUsersDocument = gql`
-  query AllUsers {
-    allUsers {
-      id
-    }
+    query AllUsers {
+  allUsers {
+    id
   }
-`;
+}
+    `;
 
 /**
  * __useAllUsersQuery__
@@ -1574,46 +1708,43 @@ export const AllUsersDocument = gql`
  *   },
  * });
  */
-export function useAllUsersQuery(
-  baseOptions?: Apollo.QueryHookOptions<AllUsersQuery, AllUsersQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<AllUsersQuery, AllUsersQueryVariables>(
-    AllUsersDocument,
-    options,
-  );
-}
-export function useAllUsersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    AllUsersQuery,
-    AllUsersQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<AllUsersQuery, AllUsersQueryVariables>(
-    AllUsersDocument,
-    options,
-  );
-}
+export function useAllUsersQuery(baseOptions?: Apollo.QueryHookOptions<AllUsersQuery, AllUsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllUsersQuery, AllUsersQueryVariables>(AllUsersDocument, options);
+      }
+export function useAllUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllUsersQuery, AllUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllUsersQuery, AllUsersQueryVariables>(AllUsersDocument, options);
+        }
 export type AllUsersQueryHookResult = ReturnType<typeof useAllUsersQuery>;
-export type AllUsersLazyQueryHookResult = ReturnType<
-  typeof useAllUsersLazyQuery
->;
-export type AllUsersQueryResult = Apollo.QueryResult<
-  AllUsersQuery,
-  AllUsersQueryVariables
->;
+export type AllUsersLazyQueryHookResult = ReturnType<typeof useAllUsersLazyQuery>;
+export type AllUsersQueryResult = Apollo.QueryResult<AllUsersQuery, AllUsersQueryVariables>;
 export const CurrentUserDocument = gql`
-  query CurrentUser {
-    authenticatedItem {
-      ... on User {
+    query CurrentUser {
+  authenticatedItem {
+    ... on User {
+      id
+      email
+      name
+      cart {
         id
-        email
-        name
+        quantity
+        product {
+          id
+          name
+          price
+          description
+          photo {
+            image {
+              publicUrlTransformed
+            }
+          }
+        }
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useCurrentUserQuery__
@@ -1630,59 +1761,35 @@ export const CurrentUserDocument = gql`
  *   },
  * });
  */
-export function useCurrentUserQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    CurrentUserQuery,
-    CurrentUserQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(
-    CurrentUserDocument,
-    options,
-  );
-}
-export function useCurrentUserLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CurrentUserQuery,
-    CurrentUserQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(
-    CurrentUserDocument,
-    options,
-  );
-}
-export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
-export type CurrentUserLazyQueryHookResult = ReturnType<
-  typeof useCurrentUserLazyQuery
->;
-export type CurrentUserQueryResult = Apollo.QueryResult<
-  CurrentUserQuery,
-  CurrentUserQueryVariables
->;
-export const SigninDocument = gql`
-  mutation Signin($email: String!, $password: String!) {
-    authenticateUserWithPassword(email: $email, password: $password) {
-      ... on UserAuthenticationWithPasswordSuccess {
-        sessionToken
-        item {
-          id
-          name
-        }
+export function useCurrentUserQuery(baseOptions?: Apollo.QueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
       }
-      ... on UserAuthenticationWithPasswordFailure {
-        code
-        message
+export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+        }
+export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
+export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
+export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export const SigninDocument = gql`
+    mutation Signin($email: String!, $password: String!) {
+  authenticateUserWithPassword(email: $email, password: $password) {
+    ... on UserAuthenticationWithPasswordSuccess {
+      sessionToken
+      item {
+        id
+        name
       }
     }
+    ... on UserAuthenticationWithPasswordFailure {
+      code
+      message
+    }
   }
-`;
-export type SigninMutationFn = Apollo.MutationFunction<
-  SigninMutation,
-  SigninMutationVariables
->;
+}
+    `;
+export type SigninMutationFn = Apollo.MutationFunction<SigninMutation, SigninMutationVariables>;
 
 /**
  * __useSigninMutation__
@@ -1702,33 +1809,19 @@ export type SigninMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useSigninMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    SigninMutation,
-    SigninMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<SigninMutation, SigninMutationVariables>(
-    SigninDocument,
-    options,
-  );
-}
+export function useSigninMutation(baseOptions?: Apollo.MutationHookOptions<SigninMutation, SigninMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SigninMutation, SigninMutationVariables>(SigninDocument, options);
+      }
 export type SigninMutationHookResult = ReturnType<typeof useSigninMutation>;
 export type SigninMutationResult = Apollo.MutationResult<SigninMutation>;
-export type SigninMutationOptions = Apollo.BaseMutationOptions<
-  SigninMutation,
-  SigninMutationVariables
->;
+export type SigninMutationOptions = Apollo.BaseMutationOptions<SigninMutation, SigninMutationVariables>;
 export const SignoutDocument = gql`
-  mutation Signout {
-    endSession
-  }
-`;
-export type SignoutMutationFn = Apollo.MutationFunction<
-  SignoutMutation,
-  SignoutMutationVariables
->;
+    mutation Signout {
+  endSession
+}
+    `;
+export type SignoutMutationFn = Apollo.MutationFunction<SignoutMutation, SignoutMutationVariables>;
 
 /**
  * __useSignoutMutation__
@@ -1746,37 +1839,23 @@ export type SignoutMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useSignoutMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    SignoutMutation,
-    SignoutMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<SignoutMutation, SignoutMutationVariables>(
-    SignoutDocument,
-    options,
-  );
-}
+export function useSignoutMutation(baseOptions?: Apollo.MutationHookOptions<SignoutMutation, SignoutMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignoutMutation, SignoutMutationVariables>(SignoutDocument, options);
+      }
 export type SignoutMutationHookResult = ReturnType<typeof useSignoutMutation>;
 export type SignoutMutationResult = Apollo.MutationResult<SignoutMutation>;
-export type SignoutMutationOptions = Apollo.BaseMutationOptions<
-  SignoutMutation,
-  SignoutMutationVariables
->;
+export type SignoutMutationOptions = Apollo.BaseMutationOptions<SignoutMutation, SignoutMutationVariables>;
 export const CreateUserDocument = gql`
-  mutation CreateUser($name: String, $email: String, $password: String) {
-    createUser(data: { name: $name, email: $email, password: $password }) {
-      id
-      name
-      email
-    }
+    mutation CreateUser($name: String, $email: String, $password: String) {
+  createUser(data: {name: $name, email: $email, password: $password}) {
+    id
+    name
+    email
   }
-`;
-export type CreateUserMutationFn = Apollo.MutationFunction<
-  CreateUserMutation,
-  CreateUserMutationVariables
->;
+}
+    `;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
 
 /**
  * __useCreateUserMutation__
@@ -1797,38 +1876,22 @@ export type CreateUserMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateUserMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateUserMutation,
-    CreateUserMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(
-    CreateUserDocument,
-    options,
-  );
-}
-export type CreateUserMutationHookResult = ReturnType<
-  typeof useCreateUserMutation
->;
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
-export type CreateUserMutationOptions = Apollo.BaseMutationOptions<
-  CreateUserMutation,
-  CreateUserMutationVariables
->;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const ResetPasswordDocument = gql`
-  mutation ResetPassword($email: String!) {
-    sendUserPasswordResetLink(email: $email) {
-      code
-      message
-    }
+    mutation ResetPassword($email: String!) {
+  sendUserPasswordResetLink(email: $email) {
+    code
+    message
   }
-`;
-export type ResetPasswordMutationFn = Apollo.MutationFunction<
-  ResetPasswordMutation,
-  ResetPasswordMutationVariables
->;
+}
+    `;
+export type ResetPasswordMutationFn = Apollo.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
 
 /**
  * __useResetPasswordMutation__
@@ -1847,46 +1910,22 @@ export type ResetPasswordMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useResetPasswordMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    ResetPasswordMutation,
-    ResetPasswordMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    ResetPasswordMutation,
-    ResetPasswordMutationVariables
-  >(ResetPasswordDocument, options);
-}
-export type ResetPasswordMutationHookResult = ReturnType<
-  typeof useResetPasswordMutation
->;
+export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOptions<ResetPasswordMutation, ResetPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, options);
+      }
+export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
-export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<
-  ResetPasswordMutation,
-  ResetPasswordMutationVariables
->;
+export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const Reset_PasswordDocument = gql`
-  mutation Reset_Password(
-    $email: String!
-    $token: String!
-    $password: String!
-  ) {
-    redeemUserPasswordResetToken(
-      token: $token
-      email: $email
-      password: $password
-    ) {
-      code
-      message
-    }
+    mutation Reset_Password($email: String!, $token: String!, $password: String!) {
+  redeemUserPasswordResetToken(token: $token, email: $email, password: $password) {
+    code
+    message
   }
-`;
-export type Reset_PasswordMutationFn = Apollo.MutationFunction<
-  Reset_PasswordMutation,
-  Reset_PasswordMutationVariables
->;
+}
+    `;
+export type Reset_PasswordMutationFn = Apollo.MutationFunction<Reset_PasswordMutation, Reset_PasswordMutationVariables>;
 
 /**
  * __useReset_PasswordMutation__
@@ -1907,23 +1946,10 @@ export type Reset_PasswordMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useReset_PasswordMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    Reset_PasswordMutation,
-    Reset_PasswordMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    Reset_PasswordMutation,
-    Reset_PasswordMutationVariables
-  >(Reset_PasswordDocument, options);
-}
-export type Reset_PasswordMutationHookResult = ReturnType<
-  typeof useReset_PasswordMutation
->;
+export function useReset_PasswordMutation(baseOptions?: Apollo.MutationHookOptions<Reset_PasswordMutation, Reset_PasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Reset_PasswordMutation, Reset_PasswordMutationVariables>(Reset_PasswordDocument, options);
+      }
+export type Reset_PasswordMutationHookResult = ReturnType<typeof useReset_PasswordMutation>;
 export type Reset_PasswordMutationResult = Apollo.MutationResult<Reset_PasswordMutation>;
-export type Reset_PasswordMutationOptions = Apollo.BaseMutationOptions<
-  Reset_PasswordMutation,
-  Reset_PasswordMutationVariables
->;
+export type Reset_PasswordMutationOptions = Apollo.BaseMutationOptions<Reset_PasswordMutation, Reset_PasswordMutationVariables>;
